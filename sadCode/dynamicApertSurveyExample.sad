@@ -1,0 +1,17 @@
+READ "sler_1689.sad";
+
+FFS USE ASC;
+
+asc=ExtractBeamLine[];
+p=Position[asc,INJECTIO][[1,1]];
+asc1=Join[Take[asc,{p,-1}],Take[asc,{3,p-1}]];
+use asc1;
+cell calc;rfsw;intra;
+emiout emit;
+
+xrange={0,50};
+yrange={0,50*Sqrt[MINCOUP]};
+zrange=Range[-26,26,2];
+nturns=1000;
+result=DynamicApertureSurvey[{xrange,yrange,zrange},nturns, Output->6];
+!!! Output->6 tells the function to print a plot in the terminal

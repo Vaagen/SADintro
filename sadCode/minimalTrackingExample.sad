@@ -1,0 +1,86 @@
+!!! importing lattice
+READ "latticeFile.sad";
+FFS USE <BEAMLINE>;
+
+! flags, may change depending on preferences 
+RAD;CELL;EMIOUT;GAUSS;INTRA;
+COD;CODPLOT;RADCOD;SELFCOD;
+RFSW;
+
+CALC;
+EMIT;
+
+!!!====== Set parameters needed for simulations======
+start=1;
+!!! x, y, and z emittance in m rad
+emits[[1]]=3.7e-10;
+emits[[2]]=8.9e-12;
+emits[[3]]=7.9e-6;
+!!! Number of particles for tracking
+np=1000;
+!!! Number of turns to track particles
+nturn=40000;
+!!! Number of turns between doing statistics
+imon=10000;
+!!! For coordinate transformation:
+!!! xorb={x,px,y,py,z,dp}, obtained from output of EMIT command
+xorb={0.,0.,0.,0.,0.,0.};
+!!!==================================================
+
+!!! Obtain optics and beam parameters
+e=Emittance[OneTurnInformation->True];
+!!! Variable e now includes a lot of information
+!!!  accessible as shown with /.
+benv=EquilibriumBeamMatrix/.e;
+emits=Emittances/.e;
+twiss=ExtendedTwissParameters/.e;
+Mnp=NormalCoordinates/.e;
+Mpn=SymplecticInverse[Mnp];
+dmpr=-DampingRate/.e;
+M0=OneTurnTransferMatrix/.e;
+bex=Sqrt[2.0*emits*dmpr];
+
+!!! Initialize gaussian beam distribution
+!  { x, px/p0, y, py/p0, z, dp/p0, 1(alive)/0(lost) }
+    x= Sqrt[benv[[1,1]]]*GaussRandom[np];
+    px=Sqrt[benv[[2,2]]]*GaussRandom[np];
+    y= Sqrt[benv[[3,3]]]*GaussRandom[np];
+    py=Sqrt[benv[[4,4]]]*GaussRandom[np];
+    z= Sqrt[benv[[5,5]]]*GaussRandom[np];
+    pz=Sqrt[benv[[6,6]]]*GaussRandom[np];
+    pflag=Table[1,{i,np}];
+    pbeam0={x,px,y,py,z,pz,pflag};
+    pbeam={x,px,y,py,z,pz,pflag};
+    beam={start,pbeam};
+
+!!! Do particle tracking
+    Do[
+        If[i==1, Print['Tracking Start'];];
+        !!! Tracking particles
+        beam=TrackParticles[beam,1,i];
+        pbeam=beam[[2]];
+        pflag=pbeam[[7]];
+        !!! Getting out 6 dim. coordinates
+        x6=Drop[pbeam,-1];
+        !!! Transforming to normal coordinates
+        x6=x6-xorb;
+        xn=Mnp.x6;
+        !!! Adding dampening and excitation
+        xn[[1]]=xn[[1]]*(1.-dmpr[[1]])+bex[[1]]*GaussRandom[np];
+        xn[[2]]=xn[[2]]*(1.-dmpr[[1]])+bex[[1]]*GaussRandom[np];
+        xn[[3]]=xn[[3]]*(1.-dmpr[[2]])+bex[[2]]*GaussRandom[np];
+        xn[[4]]=xn[[4]]*(1.-dmpr[[2]])+bex[[2]]*GaussRandom[np];
+        xn[[5]]=xn[[5]]*(1.-dmpr[[3]])+bex[[3]]*GaussRandom[np];
+        xn[[6]]=xn[[6]]*(1.-dmpr[[3]])+bex[[3]]*GaussRandom[np];
+        !!! Transforming coordinates back
+        x6=Mpn.xn;
+        x6=x6+xorb;
+        !!! Updating beam variable with dampening/exitation
+        beam={beam[[1]],Append[x6,pflag]};
+
+        If[Mod[i,imon]==0,
+            ! Do statistics/ output for each <imon> number of turns
+            ];
+
+        ,{i,nturn}];
+    Print['Tracking finished'];

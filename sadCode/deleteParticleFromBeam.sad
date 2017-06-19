@@ -1,0 +1,14 @@
+!!! Removing lost particles from beam
+np1 = Plus@@pflag; ! number of particles still alive
+If[np1<np,
+    Print[ np1, ' particles left.'];
+    m=0;   ! To shift indexes when we delete a lost particle
+    Do[
+        If[pflag[[k-m]] == 0,
+            pflag = Delete[pflag, k-m];
+            pbeam = Delete[pbeam, k-m];
+            m  += 1;]
+        ,{k,np}];
+    beam[[2]] = {pbeam, pflag};
+    np = np1;
+    ];

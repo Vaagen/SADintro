@@ -1,0 +1,32 @@
+!!! Gauss fit script from Katsunobu Oide
+FitDistribution=Class[{},{},{},
+    FitGaussian[d_,opt___]:=Module[{data=CreateBin[d],a,b,x,f,g1,g2},
+        f={a/Sqrt[2],b,ConfidenceInterval,ChiSquare}/.Fit[data,a InvErf[x]+b,x,
+        {a,(data[[-1,2]]-data[[1,2]])/4},{b,(data[[1,2]]+data[[-1,2]])/2},opt];
+        If[Plot/.opt,
+        g1=Plot[InvErf[x] f[[1]] Sqrt[2]+f[[2]],{x,-0.9999,0.9999},DisplayFunction->Identity];
+        g2=ListPlot[data,DisplayFunction->Identity];
+        Append[f,Show[g1,g2,opt]],
+        f,
+        f]];
+    CreateBin[x_]:=Module[{xs=Sort[x],n=Length[x],x0,x1,nb,xp,lxp,ym,yms,sn=0,xm},
+        nb=Floor[Sqrt[n]];
+        {x0,x1}=xs[[{1,-1}]];
+        xp=Partition[xs,nb];
+        ym=Plus@@[xp,{1}]/(lxp=Length/@xp);
+        yms=Sqrt[Plus@@[(xp-ym)^2,{1}]]/lxp;
+        xm=(sn+=#&)/@lxp;
+        xm=(2*(xm-xm[[1]]/2)/sn-1);
+        Thread[{xm,ym,yms}]
+        ];
+    InvErf[x_Real]:=Module[{y},
+        y/.FindRoot[Erf[y]==x,{y,0,{-Infinity,Infinity}}]];
+    ];
+
+!!! Usage:
+fd=FitDistribution[];  ! create an instance.
+xxx=GaussRandom[1000]; ! sample data
+f=fd@FitGaussian[xxx,Plot->True];Update[];
+! f[[1]]: sigma, f[[2]]: average, f[[3]]: confidence interval.
+! If you do not need a plot, just say f=fd@FitGaussian[xxx,Plot->False]
+! Update[] is to uptate the graphics if you plot

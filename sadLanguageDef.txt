@@ -3,13 +3,81 @@
 {
   % list of keywords
   morekeywords={
+    COMMAND, % command is not a SAD command, but is included for the example under the Main Level section
+%
     FFS,
-    GO,
+    ffs,
+    USE,
+    use,
+%
+    READ,
+    OpenWrite,
+    WriteString,
+    Close,
+%
+    GET,
+%
     CALC,
     EMIT,
-    end
+    Emittance,
+    Twiss,
+%
+    FIT,
+    FREE,
+    GO,
+    REJECT,
+    FIX,
+%
+    END,
+%
+    QUAD,
+    DRIFT,
+    MARK,
+    LINE,
+%
+    BeamLine,
+    ExtractBeamLine,
+    Position,
+%
+    Delete,
+    Insert,
+    Append,
+    Drop,
+    Join,
+    Take,
+    Sort,
+    Partition,
+%
+    Class,
+    Module,
+    Thread,
+%
+    Do,
+%
+    Length,
+    Table,
+%
+    SeedRandom,
+    GaussRandom,
+%
+    TrackParticles,
+    DynamicApertureSurvey,
+%
+    Plus,
+    Sqrt,
+    FindRoot,
+    Erf,
+    InvErf,
+    Floor,
+    SymplecticInverse,
+    Fit,
+    Plot,
+    ListPlot,
+    Show,
+%
+    Update
   },
-  sensitive=false, % keywords are not case-sensitive
+  sensitive=True, % keywords are case-sensitive
   morecomment=[l]{!}, % l is for line comment
   morecomment=[s]{(*}{*)}, % s is for start and end delimiter
   morestring=[b]" % defines that strings are enclosed in double quotes
