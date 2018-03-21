@@ -417,7 +417,7 @@ ElementValues = { "DY"["S1"] :> "DY"["S2"],  ! Setting DY of S1 equal to DY of S
 After matching variables can be made unfree by \texttt{FIX *}, while the matching conditions can be removed by \texttt{REJECT TOTAL}. Changes can be undone by using \texttt{RESET}, which removes changes made since the last call to \texttt{SAVE}.
 
 \subsection{Matching Example}
-Include anything here? Refer to official SAD example?
+I have not made this section yet; there is an official SAD example, but it would perhaps be good to have something similar here. Also, I have a cool MAX4 achromat that perhaps could be used. Send me an email ( pcthrane@stud.ntnu.no ) and I'll find the time to write something.
 
 \subsection{Modifying the beamline in FFS}
 Sometimes we wish to change the beamline we are working with, for example to remove or insert an element or to change which element comes first in a ring. This can be done using list manipulation functions. A few of these functions are \texttt{Insert}, \texttt{Delete}, \texttt{Drop}, \texttt{Take}, \texttt{Join}, \texttt{Prepend}, \texttt{Append}, whose behavior is equal to the corresponding functions in the Mathematica programming language (\url{http://reference.wolfram.com/language/}). In the following example we assume we have been working with a beamline and we now want to replace a drift called L1 with two shorter drifts, L2 and L3, including also a sextupole, S1, in between. We assume also that the new elements have been defined previously.
