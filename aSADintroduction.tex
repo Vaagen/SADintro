@@ -28,7 +28,7 @@
 \usepackage{graphicx} % Required to insert images
 \usepackage{listings} % Required for insertion of code
 \usepackage{courier} % Required for the courier font
-\usepackage{hyperref} % Make \url available
+\usepackage{hyperref} % Make references available
 \usepackage{amsmath}
 
 % Margins
@@ -90,8 +90,10 @@
 \author{\textbf{Paul Thrane}}
 \date{
 	\sadDate \\ \ \\ \ \\
-	This document and accompanying source files can be found on\\
-	\sourceLocation}
+	This document and accompanying source files can (soon) be found on\\
+	\sourceLocation\\ \ \\
+	SAD manual page: \url{https://hep-project-sad.web.cern.ch/SADHelp/SADHelp.html}
+	}
 
 
 %----------------------------------------------------------------------------------------
@@ -99,7 +101,12 @@
 \begin{document}
 
 \maketitle
-A lot of SAD help has been given by Katsunobu Oide and Demin Zhou.
+A lot of help has been given by Katsunobu Oide and Demin Zhou.
+
+\
+\
+
+\textbf{NOTE:} Should you spot any mistakes or have wishes for new sections/expansion of existing sections, don't hesitate to send an email to pcthrane@stud.ntnu.no; I'll try to help you as soon as I can.
 
 %----------------------------------------------------------------------------------------
 %	TABLE OF CONTENTS
@@ -116,27 +123,40 @@ A lot of SAD help has been given by Katsunobu Oide and Demin Zhou.
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
+%
+\textbf{Please note:} No SAD expert has yet read through this document, there might be (and most probably are) some mistakes in the text.
 
-This document is intended primarily as a quick starting guide to SAD. As such, the structure is perhaps not the best for easy reference, although I will endeavor to make the structure as clear as possible.
-There are a few other resources available, most importantly the SAD home page: \url{http://acc-physics.kek.jp/SAD/} where you will find among other things a list of many of the commands available in SAD. This list is easiest to navigate using the search function of your browser. Figure~\ref{fig:sadHomePage} points out where to find this list on the SAD home page.
-\textbf{Please note:} No SAD expert has yet read through this work, there might be (and most probably are) some mistakes in the text.
+\subsection{About SAD}
+Strategic Accelerator Design (SAD) is a computer code developed at the Japanese High Energy Accelerator Research Organization (KEK) since 1986. It is used in the design, commissioning and operation of several accelerators including J-PARC, KEKB and now SuperKEKB. It features specialized commands for easy definition of beamlines, optics matching, particle tracking and more, in combination with a Mathematica style programming interface.
+%Sadly there is a lack of documentation for SAD, and therefore one often depends on seeking help from experienced users.
+
+\subsection{Further resources}
+This document is intended primarily as a quick starting guide to SAD. 
+For the purpose of reference, 
+\url{https://hep-project-sad.web.cern.ch/SADHelp/SADHelp.html} 
+includes a list of many of the commands available in SAD, together with descriptions and some examples, and will be referred to as the SAD manual page in this document. The list is easiest to navigate using the search function of your browser. Another resource is the SAD home page, \url{http://acc-physics.kek.jp/SAD/}, the front page of which is shown in Figure~\ref{fig:sadHomePage}.
+
+
+%As such, the structure is perhaps not the best for easy reference, although I will endeavor to make the structure as clear as possible.
+%There are a few other resources available, most importantly the SAD home page: \url{http://acc-physics.kek.jp/SAD/} where you will find among other things a list of many of the commands available in SAD. This list is easiest to navigate using the search function of your browser. 
+%Figure~\ref{fig:sadHomePage} points out where to find this list on the SAD home page.
 % Mention Oide's presentation?
+
+
+
 
 \begin{figure}[h]
 	\begin{center}
 	\includegraphics[width=0.75\columnwidth]{figures/sadHomePage.png}
 	\end{center}
-	\caption{Snapshot of the SAD home page, \url{http://acc-physics.kek.jp/SAD/}. The red arrow points out where to find a summary of many important SAD commands. The SAD Lecture 2015 below, by Katsunobu Oide, is also a good resource when starting out with SAD.}
+	\caption{Snapshot of the SAD home page, \url{http://acc-physics.kek.jp/SAD/}. The SAD Lecture 2015, by Katsunobu Oide, is also a good resource when starting out with SAD.}
 	\label{fig:sadHomePage}
 \end{figure}
 
-\subsection{About SAD}
-Strategic Accelerator Design (SAD) is a computer code developed at the Japanese High Energy Accelerator Research Organization (KEK) since 1986. It is used in the design, commissioning and operation of several accelerators including J-PARC, KEKB and now SuperKEKB. It features specialized commands for easy definition of beamlines, optics matching, particle tracking and more, in combination with a Mathematica style programming interface.
-Sadly there is a lack of documentation for SAD, and therefore one often depends on seeking help from experienced users.
 
 \subsection{Installing SAD}
 An up to date repository which includes brief installation instructions on Github: \url{https://github.com/KatsOide/SAD}.
-Installing TCL/TK and X11 is recommended as this allows for using the graphical functions in SAD when e.g. plotting optic functions.
+Installing TCL/TK and X11 is recommended as this allows for using the graphical functions in SAD when e.g. plotting optical functions.
 
 \clearpage
 
@@ -179,11 +199,11 @@ MARK    START=( AX=0.0 AY=0.0 BX=5.0 BY=3.0)
 ;
 \end{lstlisting}
 
-Table~\ref{tab:elements} lists some of the available element types and accessible keywords. A more complete list and further explanations can be found on the SAD home page as mentioned in the introduction.
+Table~\ref{tab:elements} lists some of the available element types and accessible keywords. A more complete list and further explanations can be found on the SAD manual page.
 
 \begin{table}[t]
 	\begin{center}
-	\caption{Some of the main element types. In addition to the mentioned keywords most elements also accept L, ROTATE, DX, DY, DISFRIN and DISRAD. More elements and keywords, as well as details can be found on the SAD home page as mentioned in the introduction.}
+	\caption{Some of the main element types. In addition to the mentioned keywords most elements also accept L, ROTATE, DX, DY, DISFRIN and DISRAD. More elements and keywords, as well as details can be found on the SAD manual page.}
 	\label{tab:elements}
 	\begin{tabular}[c]{lcl}
 	Element		&	Some specific keywords		&	Comment				\\	\hline
@@ -201,8 +221,8 @@ Table~\ref{tab:elements} lists some of the available element types and accessibl
 %	COORD		&							&	Coordinate transformation	\\
 	APERT		&	AX,  AY					&	Aperture, for tracking		\\
 	MONI		&							&	Monitor				\\
-	BEAMBEAM	&							&	For Beam-Beam effect in tracking	\\
-	MAP			& 	L						&	For user defined mapping, \\ & & \ \ look up ExternalMap on the SAD home page \\
+	BEAMBEAM	&							&	For beam-beam effect in tracking	\\
+	MAP			& 	L						&	For user defined mapping, \\ & & \ \ look up ExternalMap on the SAD manual page \\
 	\end{tabular}
 	\end{center}
 \end{table}
@@ -223,7 +243,7 @@ We could also, for instance, make a beamline where we use one of the elements se
 LINE    FODOF=(START, QF, L1, QD, L2, QF, FINISH)
 ;    ! Note that QF appears twice
 \end{lstlisting}
-Here, using \texttt{QF} two times simulates a case where we have two quadrupole magnets connected on the same power supply; When matching they will have the same strength, while you can assign them different displacements or strength errors. They can be referred to separately as \texttt{QF.1} and \texttt{QF.2}. You are also allowed to use beamlines to define new beamlines:
+Here, using \texttt{QF} two times simulates a case where we have two quadrupole magnets connected to the same power supply; When matching they will have the same strength, while you can assign them different displacements or strength errors. They can be referred to separately as \texttt{QF.1} and \texttt{QF.2}. You are also allowed to use beamlines to define new beamlines:
 \begin{lstlisting}
 LINE    FODOF=(FODO, QF, FINISH)
 ;    ! Note here that we would also get two FINISH markers (there is one in FODO)
@@ -247,7 +267,7 @@ MOMENTUM=4e+9;    ! Nominal momentum at entrance of beamline in eV, here 4 GeV
 PBUNCH=1e+10;     ! Number of particles in each bunch
 MINCOUP=0.005;    ! Minimum emittance coupling EMITY/EMITX
 \end{lstlisting}
-Further variables defining the beam can be found on the SAD home page. Note that by default, calculations in SAD are done assuming the positron mass and charge.
+Further variables defining the beam can be found on the SAD manual page. Note that by default, calculations in SAD are done assuming the positron mass and charge.
 
 
 
@@ -293,11 +313,11 @@ EMIT;
 
 
 \subsection{Flags}
-Many options for commands in SAD are set using flags. Table~\ref{tab:flags} lists some of the available flags, more flags and further details can be found on the SAD home page.
+Many options for commands in SAD are set using flags. Table~\ref{tab:flags} lists some of the available flags, more flags and further details can be found on the SAD manual page.
 Flags are set by simply writing the flag name. For example, to set periodic boundary conditions and calculate the resulting optical functions we would do
 \begin{lstlisting}
-CELL;
-CALC;
+CELL; ! Setting CELL flag
+CALC; ! Calculating optics, with cell flag periodic boundary conditions are used
 \end{lstlisting}
 %
 \begin{table}[h]
@@ -458,9 +478,7 @@ FFS["CALC;"];
 
 
 \subsection{Plotting}
-Include about plotting, or just refer to SAD help page
-
-DISP; ??
+I have not written anything about plotting yet. There is some info on the SAD home page. If you want me to add this section, send me an email ( pcthrane@stud.ntnu.no ) and I'll find the time.
 
 %----------------------------------------------------------------------------------------
 %	Tracking										       
@@ -480,7 +498,7 @@ Where location indicates the current position-number of the beam. The position-n
 \textbf{\{x, px/p0, y, py/p0, z, dp/p0, flag\}}
 \\
 with each term again being a list with length equal to the number of particles. Flag includes a value 1 or 0 for each particle, indicating if the particle is still in the ring (1), or if it is lost (0).
-Further details can be found on the SAD home page.
+Further details can be found on the SAD manual page.
 
 %Tracking is done using a function called \texttt{TrackParticles[]}, the following is 
 %\textit{from the SAD home page} (~\url{http://acc-physics.kek.jp/SAD/}~):
@@ -534,24 +552,6 @@ Below is a general example of tracking in SAD, based on a script from Demin Zhou
 %The beam variable is of the same format as the returned result, and stores the 
 %\{location , \{ x , y , z \} \} 
 
-\subsection{Dynamic aperture}
-The dynamic aperture can be calculated using the function
-\begin{lstlisting}
-DynamicApertureSurvey[range, nturn, options];
-\end{lstlisting}
-which does single particle tracking for \texttt{nturn} number of turns for particles distributed evenly within \texttt{range}.
-The range is a list \{xrange, yrange, zrange\} with xrange equal to \{xmin, xmax\} and similarly for yrange. zrange is a list containing all the desired z values to calculate the dynamic aperture for. All the range values are the initial amplitudes divided by the equilibrium values calculated by the \texttt{EMITTANCE} command. For each z value, 51 x and y values are chosen linearly spaced in the corresponding ranges. Some of the available options are listed on the SAD home page, and include the possibility to choose between x, y or z as the axis where you specify the values, as well as the possibility to change the starting phase of the particles in e.g. the (x,px) phase space. The ensuing code is an example of how one may call \texttt{DynamicApertureSurvey} for the SuperKEKB Low Energy Ring, followed by the resulting output.
-%
-\lstinputlisting{sadCode/dynamicApertSurveyExample.sad}
-%
-\begin{figure}[h]
-	\begin{center}
-	\includegraphics[width=1\columnwidth]{figures/dynamicApertSurveyOutput.png}
-	\end{center}
-	\caption{Output example of \texttt{DynamicApertureSurvey[]} for the code above. An "A" means the particle survived all turns of the tracking, while "\texttt{*}" means the particle has not been tracked but is assumed to survive. The number of survived particles before the rest are assumed to survive can be changed in the variable DAPWIDTH (default 7). More details can be found on the SAD home page.}
-	\label{fig:dynamicApertSurveyOutput}
-\end{figure}
-
 %%%%%%%%%%
 \subsection{Comments on statistical calculations during tracking}
 Here are a few practical notes regarding doing statistics on a tracked particle beam in SAD. First is an example of how the mean and variance can be calculated from the beam variable, in addition to fitting a Gaussian distribution to the tracked particles. 
@@ -582,6 +582,27 @@ Note that to fit the particles to a Gaussian distribution you must have previous
 
 If you have particles getting lost their coordinates may become arbitrary large, messing up the statistical calculations and possibly causing errors that stop your code. A simple solution is to use the survival flag to identify any lost particles and remove them:
 \lstinputlisting{sadCode/deleteParticleFromBeam.sad}
+
+%%%%%%%%%%
+\subsection{Dynamic aperture}
+The dynamic aperture can be calculated using the function
+\begin{lstlisting}
+DynamicApertureSurvey[range, nturn, options];
+\end{lstlisting}
+which does single particle tracking for \texttt{nturn} number of turns for particles distributed evenly within \texttt{range}.
+The range is a list \{xrange, yrange, zrange\} with xrange equal to \{xmin, xmax\} and similarly for yrange. zrange is a list containing all the desired z values to calculate the dynamic aperture for. All the range values are the initial amplitudes divided by the equilibrium values calculated by the \texttt{EMITTANCE} command. For each z value, 51 x and y values are chosen linearly spaced in the corresponding ranges. Some of the available options are listed on the SAD manual page, and include the possibility to choose between x, y or z as the axis where you specify the values, as well as the possibility to change the starting phase of the particles in e.g. the (x,px) phase space. The ensuing code is an example of how one may call \texttt{DynamicApertureSurvey} for the SuperKEKB Low Energy Ring, followed by the resulting output.
+%
+\lstinputlisting{sadCode/dynamicApertSurveyExample.sad}
+%
+\begin{figure}[h]
+	\begin{center}
+	\includegraphics[width=1\columnwidth]{figures/dynamicApertSurveyOutput.png}
+	\end{center}
+	\caption{Output example of \texttt{DynamicApertureSurvey[]} for the code above. An "A" means the particle survived all turns of the tracking, while "\texttt{*}" means the particle has not been tracked but is assumed to survive. The number of survived particles before the rest are assumed to survive can be changed in the variable DAPWIDTH (default 7). More details can be found on the SAD manual page.}
+	\label{fig:dynamicApertSurveyOutput}
+\end{figure}
+
+
 
 %%%%%%%%%%
 \subsection{Beam-beam effect and luminosity}
@@ -731,8 +752,11 @@ Table~\ref{tab:opticalFunctions} lists some of the optical functions available i
 %	Mathematica basics
 %----------------------------------------------------------------------------------------
 
-\section{Mathematica basics?}
-Include Mathematica basics and SAD peculiarities? 
+\section{Mathematica basics}
+I have not written anything about Mathematica basics yet. If you want me to add this section, send me an email ( pcthrane@stud.ntnu.no ) and I'll find the time.
+
+%Include Mathematica basics and SAD peculiarities? \\
+%Scoping for example
 
 %----------------------------------------------------------------------------------------
 %	comments
